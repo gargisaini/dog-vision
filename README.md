@@ -1,45 +1,64 @@
-📌 Project Title: Dog Breed Classification Using Transfer Learning
-You built a deep learning model using TensorFlow 2.x and MobileNetV2 to classify 120 dog breeds using 10,000+ images from the Kaggle Dog Breed Identification dataset. This is a multi-class image classification problem.
+# 🐶 Dog Breed Classification Using Transfer Learning
 
-🧠 Workflow Steps:
-Data Preparation
+This project builds a deep learning model to classify **120 dog breeds** using the [Kaggle Dog Breed Identification Dataset](https://www.kaggle.com/c/dog-breed-identification). It leverages **Transfer Learning** with **MobileNetV2** pretrained on ImageNet, implemented using **TensorFlow 2.x**.
 
-Downloaded the dataset from Kaggle and extracted it.
+---
 
-Loaded images and labels, and split into train/validation/test sets.
+## 📌 Project Overview
 
-Applied image preprocessing and resizing.
+- **Problem**: Multi-class image classification (120 dog breeds)
+- **Dataset**: 10,000+ labeled dog images from Kaggle
+- **Model**: MobileNetV2 (transfer learning)
+- **Tools**: TensorFlow 2.x, Keras, TensorBoard, Matplotlib
 
-Model Building
+---
 
-Used MobileNetV2 (pretrained on ImageNet) via tf.keras.applications.
+## 🧠 Workflow Steps
 
-Customized the top layers to suit the 120-class classification task.
+### 📁 Data Preparation
+- Downloaded and extracted the dataset from Kaggle.
+- Loaded image IDs and breed labels from `labels.csv`.
+- Mapped image IDs to breeds.
+- Split dataset into **training**, **validation**, and **test** sets.
+- Resized images to 224×224 and normalized pixel values.
+- Used `tf.data` pipeline for efficient loading and batching.
 
-Compiled with Adam optimizer and categorical_crossentropy loss.
+### 🏗️ Model Building
+- Used `tf.keras.applications.MobileNetV2` as the feature extractor.
+- Replaced top layers with:
+  - Global Average Pooling
+  - Dense + Dropout
+  - Final Dense layer with softmax activation (120 classes)
+- Compiled with:
+  - **Optimizer**: Adam
+  - **Loss**: Categorical Crossentropy
+  - **Metrics**: Accuracy
 
-Training
+### 🏋️ Training
+- Applied data augmentation (rotation, flip, zoom, etc.).
+- Used callbacks:
+  - EarlyStopping
+  - ModelCheckpoint
+  - TensorBoard logging
+- Trained on 10,000+ images with efficient GPU usage.
 
-Used data augmentation to improve generalization.
+### 📊 Evaluation
+- Evaluated performance on validation and test sets.
+- Visualized:
+  - Accuracy & Loss curves
+  - Confusion Matrix
+  - Classification Report (precision, recall, F1-score)
 
-Trained the model with early stopping and checkpoint callbacks.
+### 📈 Improvements
+- Started with a small subset for quick iterations.
+- Scaled up to the full dataset (~10,000 images).
+- Fine-tuned deeper layers of MobileNetV2 to improve accuracy.
 
-Used TensorBoard for training visualization.
+### 💾 Saving & Exporting
+- Saved the final model in:
+  - `.h5` format (HDF5)
+  - `SavedModel` format (for TensorFlow Serving)
+- Demonstrated predictions on custom dog images.
 
-Evaluation
+---
 
-Evaluated performance on the validation and test sets.
-
-Used metrics like accuracy, confusion matrix, and classification report.
-
-Improvement
-
-Started with a smaller subset of the data, scaled up to 10,000+ images.
-
-Fine-tuned the base MobileNetV2 layers.
-
-Saving & Export
-
-Saved the final trained model in HDF5 or SavedModel format.
-
-Demonstrated model prediction on custom dog images.
